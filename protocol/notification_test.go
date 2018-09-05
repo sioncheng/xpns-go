@@ -28,5 +28,12 @@ func TestNotificationToJSONString(t *testing.T) {
 		t.Error("excpect " + expectJSONString + " but " + notiJSONString)
 	}
 
-	t.Log("ok")
+	noti2, err := ParseNotificationFromJSONString(notiJSONString)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if noti2.UniqID != noti.UniqID {
+		t.Error(noti2.UniqID)
+	}
 }

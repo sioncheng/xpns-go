@@ -13,6 +13,11 @@ type Notification struct {
 	Ext    map[string]interface{} `json:"ext"`
 }
 
+//NilNotification as a standard nil notification
+var NilNotification = Notification{
+	UniqID: "",
+}
+
 //ToJSONString export notification to json string
 func (n *Notification) ToJSONString() (string, error) {
 	bytes, err := json.Marshal(n)
@@ -21,4 +26,16 @@ func (n *Notification) ToJSONString() (string, error) {
 	}
 
 	return string(bytes), nil
+}
+
+//ParseNotificationFromJSONString parse json string to notification struct if possible
+func ParseNotificationFromJSONString(jsonString string) (Notification, error) {
+	noti := Notification{}
+
+	err := json.Unmarshal([]byte(jsonString), &noti)
+	if err != nil {
+		return NilNotification, err
+	}
+
+	return noti, nil
 }
